@@ -22,6 +22,7 @@ public class BaseBallNumberGame implements NumberGame {
   private final NumberGameResultAnalyzer numberGameResultAnalyzer;
 
   public BaseBallNumberGame(Rule rule) {
+    verifyRule(rule);
     this.numberGameRunner = new BaseBallNumberGameRunner(rule);
     this.numberGameResultAnalyzer = new BaseBallNumberGameResultAnalyzer(rule);
   }
@@ -62,5 +63,15 @@ public class BaseBallNumberGame implements NumberGame {
       return true;
     }
     return false;
+  }
+
+  private void verifyRule(Rule rule) {
+    if (!isRuleInRange(rule)) {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  private boolean isRuleInRange(Rule rule) {
+    return (rule.getMaxNumber() - rule.getMinNumber()) + 1 >= rule.getCountOfNumbers();
   }
 }
